@@ -71,7 +71,7 @@ This is the problem that this python tool is trying to solve. There might be bet
 
 I run the script in background by launching it in i3 config:
 
-`exec --no-startup-id python /home/miikka/git/DotfileTracker/src/dotfile_tracker.py -f "/home/miikka/.bashrc,/home/miikka/.config/i3/config,/home/miikka/.vimrc" -u miikka -b air1 >> /tmp/dotfiles.log &`
+`exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f "/home/m/.bashrc,/home/m/.config/i3/config,/home/m/.vimrc" -u m -b air1 >> /tmp/dotfiles.log &`
 
 - Example output:
 
