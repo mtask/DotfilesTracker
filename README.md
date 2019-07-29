@@ -105,7 +105,7 @@ I do it by launching it in i3 config:
 
 `exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f /home/m/.trackthese -u m -b air1 >> /tmp/dotfiles.log &`
 
-Script uses a pidfile (/tmp/.dotfile_tracker.pid) to check if instance of script is already running so it shouldn't start duplicate processees.
+Script uses a pidfile (/tmp/.dotfile_tracker.pid) to check if instance of script is already running so it shouldn't start duplicate processes.
 
 ### Example output
 
