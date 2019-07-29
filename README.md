@@ -58,7 +58,9 @@ This is the problem that this python tool is trying to solve. There might be bet
 
 #### Setup
 
- - Script expects that dotfiles repo is in path `~/.dotfiles` like in above example.
+ - Script is made for Python3
+ - Script expects that dotfiles repo is in path `~/.dotfiles` like in above example. 
+   You can override this with `-p <absolute path>` but working directory is hard coded to `/home/<given username>`.
  - Dependencies
    - `pip3 install pyinotify`
    - Other libraries: `sys, os, argparse, subprocess`
@@ -71,7 +73,7 @@ This is the problem that this python tool is trying to solve. There might be bet
 
 I run the script in background by launching it in i3 config:
 
-`exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f "/home/m/.bashrc,/home/m/.config/i3/config,/home/m/.vimrc" -u m -b air1 >> /tmp/dotfiles.log &`
+`exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f "/home/m/.bashrc,/home/m/.config/i3/config,/home/m/.vimrc" -u m -b air1 &>> /tmp/dotfiles.log &`
 
 - Example output:
 
