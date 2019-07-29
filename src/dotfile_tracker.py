@@ -24,9 +24,9 @@ class Git(object):
         self.add = self.git_base + ["add", add_file]
         self.push =  self.git_base + ["push", "origin", self.branch]
         try:
-            subprocess.call(self.add, stderr=sys.stdout.buffer)
-            subprocess.call(self.commit, stderr=sys.stdout.buffer)
-            subprocess.call(self.push, stderr=sys.stdout.buffer)
+            subprocess.call(self.add)
+            subprocess.call(self.commit)
+            subprocess.call(self.push)
             print("[!] Pushed changes in "+add_file)
         except Exception as e:
             print("[!] Failed to push changes for " +add_file)
@@ -45,7 +45,7 @@ class DotfileEventHandler(pyinotify.ProcessEvent):
         """
         Post changes to git when a dotfile is updated
         """
-        self.git.post_change(event.pathname, commit_msg="dotfile_tracker update")
+        self.git.post_change(event.pathname, commit_msg="dotfile_tracker update: "+event.pathname)
 
 def main(files, user, branch, local_git_folder=""):
     # Git object
