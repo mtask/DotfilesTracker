@@ -65,7 +65,7 @@ def main(files, user, branch, local_git_folder=""):
 def parse_args():
     descr = """Monitor dotfiles and autocommit to git"""
     parser = argparse.ArgumentParser(description=descr)
-    parser.add_argument("-f", "--files", type=str, help="Files to monitor", required=True)
+    parser.add_argument("-f", "--files", type=str, help="Files to monitor. Accepts list of filenames seperated with comma or path to file were one targeted file per line", required=True)
     parser.add_argument("-u", "--username", type=str, help="System user which is used to create path for /home/<user>/", required=True)
     parser.add_argument("-b", "--branch", type=str, help="Git branch for push", required=True)
     parser.add_argument("-p", "--path", type=str, help="Override local path of git repo (use absolute path). Default is /home/<user>/.dotfiles", required=False)
@@ -76,8 +76,19 @@ if __name__ == '__main__':
     if not args.files or not args.username or not args.branch:
         print(args.help)
         sys.exit()
+
+    # Check if path to repository folder was given
     if args.path:
         git_local_folder = args.path
     else:
         git_local_folder = ""
-    main(args.files.split(','), args.username, args.branch, git_local_folder)
+
+    # Check if files to monitor were gave as file or string
+    if os.path.isfile(args.files):
+        with open(args.files) as f:
+            files_to_monitor = f.read().splitlines() 
+    else:
+        files_to_monitor = args.files.split(',')
+    print(files_to_monitor)
+  
+    # main(files_to_monitor, args.username, args.branch, git_local_folder)

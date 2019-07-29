@@ -59,8 +59,6 @@ This is the problem that this python tool is trying to solve. There might be bet
 #### Setup
 
  - Script is made for Python3
- - Script expects that dotfiles repo is in path `~/.dotfiles` like in above example. 
-   You can override this with `-p <absolute path>` but working directory is hard coded to `/home/<given username>`.
  - Dependencies
    - `pip3 install pyinotify`
    - Other libraries: `sys, os, argparse, subprocess`
@@ -71,11 +69,43 @@ This is the problem that this python tool is trying to solve. There might be bet
 
 `python src/dotfile_tracker.py -f "/home/myusername/.bashrc,/home/myusername/.config/i3/config" -u myusername -b machine_branch`
 
+Arguments explained
+
+ - `-f/--files <str/file>`
+
+List of files to track in following form: "/path/.file1,/path/.file/,/path/.etc".
+
+If you have lots of files to track you can also create file were one line always includes path to one file. 
+Then just pass that file as an argument for `-f` option. E.g: `python dotfile_tracker -f /home/u/.trackthese`.
+
+```
+$ cat /home/m/.trackthese
+/home/m/.bashrc
+/home/m/.vimrc
+/home/m/.emacs.d/init.el
+/home/m/.config/i3/config
+```
+
+- `-u/--username`
+
+Your *nix username which is used to create working directory path and repository folder path (if not overridden).
+
+- `-b/--branch`
+
+Git branch for pushing.
+
+- `-p/--path` (optional)
+
+Script assumes that dotfiles repo is in path `~/.dotfiles`.
+You can override this with `-p <absolute path>`. Working directory is hard coded to `/home/<given username>`.
+
+
+### Running script in the background
 I run the script in background by launching it in i3 config:
 
-`exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f "/home/m/.bashrc,/home/m/.config/i3/config,/home/m/.vimrc" -u m -b air1 &>> /tmp/dotfiles.log &`
+`exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f /home/m/.trackthese -u m -b air1 >> /tmp/dotfiles.log &`
 
-- Example output:
+### Example output
 
 ```
 $ python src/dotfile_tracker.py -f "/home/m/.bashrc,/home/m/.config/i3/config" -u m -b air1
