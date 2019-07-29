@@ -15,8 +15,9 @@ $ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 $ config config status.showUntrackedFiles no
 ```
 
-Because my desktop configs are not compatible between each other I can't just track one version of dotfiles.
-To manage this I create own branches for each machine. This requires that master branch is kept empty.
+Because not all of my desktop configs are not compatible between each other I can't just track one version of dotfiles.
+To manage this I create own branches for each machine or group of machines that can share same dotfiles. 
+This requires that master branch is kept empty.
 
 ### Setup for initial machine
 
@@ -59,7 +60,7 @@ This is the problem that this python tool is trying to solve. There might be bet
 
  - Script is made for Python3
  - Dependencies
-   - `pip3 install pyinotify`
+   - `pip3 install pyinotify psutil`
    - Other libraries: `sys, os, argparse, subprocess`
 
 

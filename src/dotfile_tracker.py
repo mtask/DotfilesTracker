@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import psutil
 import pyinotify
 import argparse
 import sys
@@ -70,16 +71,16 @@ def already_running(pid_file_path="/tmp/.dotfile_tracker.pid"):
 
     with open(pid_file_path, 'a+') as f:
         f.seek(0)
-        try:
-            pid = int(f.readline())
-            os.kill(pid, 0)
-            running = True
-        except (ValueError, ProcessLookupError) as e:
-            print(e)
+        pid = f.readline()
+        running = False
+        for process in psutil.process_iter():
+            if str(process.pid) == pid and sys.argv[0] in ' '.join(process.cmdline()):
+                running = True
+        if not running:
             f.seek(0)
             f.truncate()
             f.write(str(my_pid))
-            running = False
+
     return running
 
 
