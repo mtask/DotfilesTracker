@@ -52,8 +52,11 @@ def main(files, user, branch, local_git_folder=""):
     git = Git(user, branch, local_git_folder)
     # watch manager
     wm = pyinotify.WatchManager()
+
+    print("[!] Monitoring following files:")
     for f in files:
         wm.add_watch(f, pyinotify.ALL_EVENTS, rec=True)
+        print("-"+ f)
 
     # event handler
     eh = DotfileEventHandler(git)
@@ -88,7 +91,5 @@ if __name__ == '__main__':
         with open(args.files) as f:
             files_to_monitor = f.read().splitlines() 
     else:
-        files_to_monitor = args.files.split(',')
-    print(files_to_monitor)
-  
-    # main(files_to_monitor, args.username, args.branch, git_local_folder)
+        files_to_monitor = args.files.split(',')  
+    main(files_to_monitor, args.username, args.branch, git_local_folder)
