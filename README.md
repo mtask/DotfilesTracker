@@ -3,9 +3,8 @@
 Script that automates "dotfiles" tracking using git.
 
 
-# Basic Configuration
+# Configuration
 
-## Initial setup
 
 This is just basic configuration for tracking dotfiles with git. Main idea is taken from Arch Linux wiki and from this blog post: https://medium.com/@augusteo/simplest-way-to-sync-dotfiles-and-config-using-git-14051af8703a.
 
@@ -101,9 +100,12 @@ You can override this with `-p <absolute path>`. Working directory is hard coded
 
 
 ### Running script in the background
-I run the script in background by launching it in i3 config:
+There's of course multiple options to run the script in baground.
+I do it by launching it in i3 config:
 
 `exec --no-startup-id python /home/m/git/DotfileTracker/src/dotfile_tracker.py -f /home/m/.trackthese -u m -b air1 >> /tmp/dotfiles.log &`
+
+Script uses a pidfile (/tmp/.dotfile_tracker.pid) to check if instance of script is already running so it shouldn't start duplicate processees.
 
 ### Example output
 

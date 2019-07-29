@@ -18,7 +18,7 @@ class Git(object):
 
         print("[!] Local git repository folder: "+self.local_git_folder)
         self.git_base = ["git", "--git-dir="+self.local_git_folder, "--work-tree=/home/"+self.user]
- 
+
     def post_change(self, add_file, commit_msg=""):
         self.commit = self.git_base + ["commit", "-m", commit_msg]
         self.add = self.git_base + ["add", add_file]
@@ -37,7 +37,7 @@ class DotfileEventHandler(pyinotify.ProcessEvent):
     """
     This is a handler for new write events in monitored files
     """
-    
+
     def __init__(self, git_obj):
         self.git = git_obj
 
@@ -65,6 +65,24 @@ def main(files, user, branch, local_git_folder=""):
     notifier = pyinotify.Notifier(wm, eh)
     notifier.loop()
 
+def already_running(pid_file_path="/tmp/.dotfile_tracker.pid"):
+    my_pid = os.getpid()
+
+    with open(pid_file_path, 'a+') as f:
+        f.seek(0)
+        try:
+            pid = int(f.readline())
+            os.kill(pid, 0)
+            running = True
+        except (ValueError, ProcessLookupError) as e:
+            print(e)
+            f.seek(0)
+            f.truncate()
+            f.write(str(my_pid))
+            running = False
+    return running
+
+
 def parse_args():
     descr = """Monitor dotfiles and autocommit to git"""
     parser = argparse.ArgumentParser(description=descr)
@@ -75,10 +93,17 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == '__main__':
+    # Parse args
     args = parse_args()
     if not args.files or not args.username or not args.branch:
         print(args.help)
         sys.exit()
+
+    # Check if instance of script is already running
+    if already_running():
+        print("[!] Instance of script is already running.")
+        sys.exit(0)
+
 
     # Check if path to repository folder was given
     if args.path:
@@ -89,7 +114,7 @@ if __name__ == '__main__':
     # Check if files to monitor were gave as file or string
     if os.path.isfile(args.files):
         with open(args.files) as f:
-            files_to_monitor = f.read().splitlines() 
+            files_to_monitor = f.read().splitlines()
     else:
-        files_to_monitor = args.files.split(',')  
+        files_to_monitor = args.files.split(',')
     main(files_to_monitor, args.username, args.branch, git_local_folder)
