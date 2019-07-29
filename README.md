@@ -69,6 +69,10 @@ This is the problem that this python tool is trying to solve. There might be bet
 
 `python src/dotfile_tracker.py -f "/home/myusername/.bashrc,/home/myusername/.config/i3/config" -u myusername -b machine_branch`
 
+I run the script in background by launching it in i3 config:
+
+`exec --no-startup-id python /home/miikka/git/DotfileTracker/src/dotfile_tracker.py -f "/home/miikka/.bashrc,/home/miikka/.config/i3/config,/home/miikka/.vimrc" -u miikka -b air1 >> /tmp/dotfiles.log &`
+
 - Example output:
 
 ```
@@ -89,3 +93,4 @@ To ...
    d83ed80..b9a3b4f  air1 -> air1
 [!] Pushed changes in /home/m/.bashrc
 ```
+
