@@ -129,3 +129,8 @@ To ...
 [!] Pushed changes in /home/m/.bashrc
 ```
 
+# Known issues
+
+- Vim
+
+`set backupcopy=yes` is required so vim doesn't change inode of the file. Pyinotify can't follow file name.
